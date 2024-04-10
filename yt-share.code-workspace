@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "./web"
+		},
+		{
+			"path": "./notification-service"
+		},
+		{
+			"path": "./auth-service"
+		},
+		{
+			"path": "./realtime-server"
+		}
+	],
+	"settings": {}
+}
