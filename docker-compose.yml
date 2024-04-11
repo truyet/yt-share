@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - ./data/redis:/data
+    networks:
+      - app-network
+  realtime-server:
+    depends_on:
+      - redis
+    build:
+      context: ./realtime-server
+      dockerfile: Dockerfile
+    container_name: realtime-server
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./realtime-server:/usr/src/app
+    command: yarn start:dev
+    networks:
+      - app-network
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    # environment:
+    #   - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./auth-service:/usr/src/app
+    command: yarn start:dev
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

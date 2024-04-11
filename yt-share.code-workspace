@@ -10,8 +10,15 @@
 			"path": "./auth-service"
 		},
 		{
+			"path": "./share-service"
+		},
+		{
 			"path": "./realtime-server"
+		},
+		{
+			"path": "./docker-compose.yml"
 		}
+
 	],
 	"settings": {}
 }
