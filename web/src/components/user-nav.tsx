@@ -2,7 +2,12 @@ import { SharePost } from "./share-post";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 
-export function UserNav({ profile, onLogoutSuccess }) {
+type UserNavProps = {
+  onLogoutSuccess: () => {},
+  profile: any
+}
+
+export function UserNav({ profile, onLogoutSuccess }: UserNavProps) {
 
   const logout = async () => {
     await fetch('/api/auth/logout')

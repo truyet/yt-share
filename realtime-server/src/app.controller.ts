@@ -7,7 +7,6 @@ export class AppController {
 
   @Post('/share')
   async newPost(@Body() data: any) {
-    Logger.log('share post', JSON.stringify(data));
     return this.eventGateway.newPost(JSON.stringify(data));
   }
 }

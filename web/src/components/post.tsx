@@ -5,9 +5,15 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { Input } from "./ui/input";
 import Link from "next/link";
 import { useToast } from "./ui/use-toast";
+import { Post as PostEnt } from "@/pages/api/posts/entities";
+
+type PostProps = {
+  post: PostEnt,
+  profile: any
+}
 
 
-export const Post = ({ post, profile }) => {
+export const Post = ({post, profile}: PostProps) => {
   const { toast } = useToast() 
 
   const getThumbnail = (thumbnails: string) => {

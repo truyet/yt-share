@@ -8,5 +8,6 @@ export interface Post {
   authorId: number;
   author: {id: number, email: string};
   userInteraction: string;
+  thumbnails: string;
 
 }

@@ -19,7 +19,11 @@ const FormSchema = z.object({
   }),
 })
 
-export const UserLogin = ({onLoginSuccess}) => {
+type UserLoginProps = {
+  onLoginSuccess: () => {}
+}
+
+export const UserLogin = ({ onLoginSuccess }: UserLoginProps) => {
   const { toast } = useToast() 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

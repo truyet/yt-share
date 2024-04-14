@@ -18,7 +18,11 @@ const FormSchema = z.object({
   }),
 })
 
-export const SharePost = ({onPostSuccess}) => {
+type SharePostProps = {
+  onPostSuccess: () => {}
+}
+
+export const SharePost = ({ onPostSuccess }: SharePostProps) => {
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -35,6 +39,7 @@ export const SharePost = ({onPostSuccess}) => {
       body: JSON.stringify({ videoUrl }),
     })
     if (resp.ok) {
+      onPostSuccess()
       setOpen(false)
       form.reset()
       toast({

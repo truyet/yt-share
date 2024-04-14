@@ -15,7 +15,7 @@ export default async function handler(
     
     if (apiResp.ok) {
       const posts = await apiResp.json()
-      const userIds = new Map(posts.map(p => [p.authorId, true]))
+      const userIds = new Map(posts.map((p: any) => [p.authorId, true]))
       // console.log(userIds.keys())
       const usersResp = await fetch('http://auth-service:3000/users/ids', {
         method: 'POST',
@@ -23,8 +23,8 @@ export default async function handler(
         body: JSON.stringify({ids: Array.from(userIds.keys())})
       })
       if (usersResp.ok) {
-        const users = await usersResp.json().then(it => new Map(it.map(u => [u.id, u])))
-        posts.forEach(p => {
+        const users = await usersResp.json().then(it => new Map(it.map((u: any) => [u.id, u])))
+        posts.forEach((p: any) => {
           p.author = users.get(p.authorId)
         })
       }

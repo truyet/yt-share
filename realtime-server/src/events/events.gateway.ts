@@ -30,7 +30,7 @@ export class EventsGateway {
   }
 
   async newPost(data: string) {
-    Logger.log('data', data);
+    // Logger.log('data', data);
     return this.server.emit('broadcast', data);
   }
 

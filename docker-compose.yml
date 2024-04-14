@@ -34,14 +34,16 @@ services:
     restart: unless-stopped
     ports:
       - "3001:3000"
-    # environment:
-    #   - REDIS_URL=redis://redis:6379
+    environment:
+      - DATABASE_URL=file:./dev.db
     volumes:
       - ./auth-service:/usr/src/app
     command: yarn start:dev
     networks:
       - app-network
   post-service:
+    depends_on:
+      - redis
     build:
       context: ./post-service
       dockerfile: Dockerfile
@@ -51,12 +53,17 @@ services:
       - "3002:3000"
     environment:
       - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=file:./dev.db
     volumes:
       - ./post-service:/usr/src/app
     command: yarn start:dev
     networks:
       - app-network
   web:
+    depends_on:
+      - auth-service
+      - realtime-server
+      - post-service
     build:
       context: ./web
     container_name: web

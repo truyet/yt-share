@@ -15,15 +15,9 @@ export default function Home() {
 
   const [posts, setPosts] = useState<PostEnt[]>()
   const [profile, setProfile] = useState<any>(null)
+  const [message, setMessage] = useState<string>('')
   const [isConnected, setIsConnected] = useState(false);
   const [transport, setTransport] = useState("N/A");
-
-  useEffect(() => {
-    if (!posts) {
-      getPosts()
-      getProfile()
-    }
-  }, [posts])
 
   const getPosts = async () => {
     const resp = await fetch('/api/posts/latest', { method: 'GET' })
@@ -53,6 +47,27 @@ export default function Home() {
   }
 
   useEffect(() => {
+    getPosts()
+    // console.log('received broadcast', data)
+    if (message && message.length > 0) {
+      const post = JSON.parse(message)
+      console.log(profile, post)
+      if (!profile || post.authorId !== profile.id) {
+        toast({
+          title: "New Share",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{post.title}</code>
+            </pre>
+          ),
+        })
+      }
+    }
+  }, [message])
+
+  useEffect(() => {
+    getPosts()
+    getProfile()
     if (socket.connected) {
       onConnect();
     }
@@ -64,6 +79,10 @@ export default function Home() {
       socket.io.engine.on("upgrade", (transport) => {
         setTransport(transport.name);
       });
+
+      socket.on("broadcast", data => {
+        setMessage(data)
+      })
     }
 
     function onDisconnect() {
@@ -73,22 +92,6 @@ export default function Home() {
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-
-    socket.on("broadcast", data => {
-      console.log('received broadcast', data)
-      getPosts()
-      const post = JSON.parse(data)
-      if (profile && post.authorId !== profile.authorId) {
-        toast({
-          title: "New Share",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{post.title}</code>
-            </pre>
-          ),
-        })}
-      }
-    )
 
     return () => {
       socket.off("connect", onConnect);
@@ -103,7 +106,7 @@ export default function Home() {
           <MainNav className="mx-6" />
           <div className="ml-auto flex items-center space-x-2">
             { !profile ?
-              <><UserLogin onLoginSuccess={getProfile} /><UserRegister /></> :
+              <><UserLogin onLoginSuccess={getProfile} /><UserRegister onRegisterSuccess={getProfile}/></> :
               <div className="flex space-x-8"><SharePost onPostSuccess={getPosts} /><UserNav profile={profile} onLogoutSuccess={clearProfile} /></div>}
           </div>
         </div>

@@ -9,6 +9,7 @@ import * as argon2 from 'argon2';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { uid } from 'uid';
 import { TokenDto } from './dto/token.dto';
+import { emit } from 'process';
 
 @Injectable()
 export class AuthService {
@@ -58,6 +59,7 @@ export class AuthService {
         sub: user.id,
         iat,
         name: user.name,
+        email: user.email,
       };
       return {
         access_token: await this.jwtService.signAsync(payload, {

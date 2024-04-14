@@ -22,7 +22,11 @@ const FormSchema = z.object({
   }),
 })
 
-export const UserRegister = () => {
+type UserRegisterProps = {
+  onRegisterSuccess: () => {}
+}
+
+export const UserRegister = ({onRegisterSuccess}: UserRegisterProps) => {
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -42,6 +46,7 @@ export const UserRegister = () => {
     if (resp.ok) {
       form.reset()
       setOpen(false)
+      onRegisterSuccess()
       toast({
         title: "Success",
         // description: (
