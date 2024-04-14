@@ -15,7 +15,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signIn(email: string, pass: string): Promise<TokenDto> {
     const user = await this.usersService.getUser(email);
@@ -32,11 +32,13 @@ export class AuthService {
       sub: user.id,
       iat,
       name: user.name,
+      email: user.email,
     };
     return {
       access_token: await this.jwtService.signAsync(payload, {
         expiresIn: 3600,
       }),
+      expires_in: 3600,
     };
   }
 
@@ -61,6 +63,7 @@ export class AuthService {
         access_token: await this.jwtService.signAsync(payload, {
           expiresIn: 3600,
         }),
+        expires_in: 3600,
       };
     } catch (e) {
       throw new BadRequestException('EMAIL_EXISTED');

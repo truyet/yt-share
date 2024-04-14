@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Post {
+  id              Int               @default(autoincrement()) @id
+  title           String
+  description     String
+  thumbnails      String
+  videoUrl        String
+  videoId         String
+  authorId        Int
+  likeCount       Int               @default(0)
+  dislikeCount    Int               @default(0)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model PostInteraction {
+  id              Int      @default(autoincrement()) @id
+  videoId         Int      
+  userId          Int
+  type            String
+  createdAt       DateTime           @default(now())
+  @@index([videoId, userId])
+}

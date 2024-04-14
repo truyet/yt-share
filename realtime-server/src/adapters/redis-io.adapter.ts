@@ -18,7 +18,7 @@ export class RedisIoAdapter extends IoAdapter {
     const redisUrl = this.configService.get<string>('REDIS_URL', {
       infer: true,
     });
-    console.log(redisUrl);
+    // console.log(redisUrl);
     const pubClient = createClient({ url: redisUrl });
     const subClient = pubClient.duplicate();
 

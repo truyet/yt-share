@@ -1,3 +1,5 @@
+import { Controller, Logger } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import {
   MessageBody,
   SubscribeMessage,
@@ -9,7 +11,7 @@ import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Server } from 'socket.io';
 
-@WebSocketGateway({
+@WebSocketGateway(8001, {
   cors: {
     origin: '*',
   },
@@ -19,12 +21,21 @@ export class EventsGateway {
   server: Server;
 
   @SubscribeMessage('events')
-  findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+  receivedEvent(@MessageBody() data: any): Observable<WsResponse<number>> {
+    // Logger.log('data', data);
+    this.server.send('broadcast', data);
+    return from([1, 2, 3]).pipe(
+      map((item) => ({ event: 'events', data: item })),
+    );
   }
 
-  @SubscribeMessage('identity')
-  async identity(@MessageBody() data: number): Promise<number> {
-    return data;
+  async newPost(data: string) {
+    Logger.log('data', data);
+    return this.server.emit('broadcast', data);
   }
+
+  // @SubscribeMessage('identity')
+  // async identity(@MessageBody() data: number): Promise<number> {
+  //   return data;
+  // }
 }

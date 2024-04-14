@@ -4,13 +4,10 @@
 			"path": "./web"
 		},
 		{
-			"path": "./notification-service"
-		},
-		{
 			"path": "./auth-service"
 		},
 		{
-			"path": "./share-service"
+			"path": "./post-service"
 		},
 		{
 			"path": "./realtime-server"

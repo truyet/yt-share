@@ -18,7 +18,7 @@ services:
     container_name: realtime-server
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "8001:8001"
     environment:
       - REDIS_URL=redis://redis:6379
     volumes:
@@ -39,6 +39,34 @@ services:
     volumes:
       - ./auth-service:/usr/src/app
     command: yarn start:dev
+    networks:
+      - app-network
+  post-service:
+    build:
+      context: ./post-service
+      dockerfile: Dockerfile
+    container_name: post-service
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./post-service:/usr/src/app
+    command: yarn start:dev
+    networks:
+      - app-network
+  web:
+    build:
+      context: ./web
+    container_name: web
+    volumes:
+      - ./web:/usr/src/app
+    command: yarn dev
+    ports:
+      - "8000:8000"
+    environment:
+      NODE_ENV: development
     networks:
       - app-network
 
