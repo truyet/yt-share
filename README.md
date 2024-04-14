@@ -44,9 +44,21 @@ Project use sqlite with prisma for development, you need to migrate database wit
 
 Demo
 
-
-
 https://github.com/truyet/yt-share/assets/710057/181e1fa5-ab4a-4df2-884a-b15547689530
+
+## Troubleshooting
+
+### Database connection error
+Sometimes you will have the database error then you need to check env `DATABASE_URL` that already config in `.env` file
+
+### Service build fail or missing library
+You can try to delete `node_modules` and reinstall with `yarn`
+
+
+## Project Design
+
+![Untitled Diagram drawio](https://github.com/truyet/yt-share/assets/710057/50eba256-474f-4089-8167-f496617bf9b1)
+
 
 
 
