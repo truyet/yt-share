@@ -18,8 +18,6 @@ This website use Nextjs to optimize and enhance SEO.
 * `realtime-server`: websocket server listen event and broadcast to others
 * `web`: website ui
 
-## Technical Refinement
-
 ## Prerequisites
 
 * [Docker & Docker Compose](https://docs.docker.com/desktop/)
@@ -36,6 +34,11 @@ Project use sqlite with prisma for development, you need to migrate database wit
 
 * `auth-service`: enter service directory and run `yarn prisma migrate dev --name init`
 * `post-service`: enter service directory and run `yarn prisma migrate dev --name init`
+
+## Unit Testing
+
+* `auth-service`: enter service directory and run `yarn test`
+* `post-service`: enter service directory and run `yarn test`
 
 ## Running the Application
 
