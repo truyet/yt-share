@@ -34,8 +34,8 @@ This website use Nextjs to optimize and enhance SEO.
 
 Project use sqlite with prisma for development, you need to migrate database with prisma:
 
-* `auth-service`: cd to service and run `yarn prisma migrate dev --name init`
-* `post-service`: cd to service and run `yarn prisma migrate dev --name init`
+* `auth-service`: enter service directory and run `yarn prisma migrate dev --name init`
+* `post-service`: enter service directory and run `yarn prisma migrate dev --name init`
 
 ## Running the Application
 
