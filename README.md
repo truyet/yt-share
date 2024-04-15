@@ -39,8 +39,9 @@ Project use sqlite with prisma for development, you need to migrate database wit
 
 * `auth-service`: enter service directory and run `yarn test`
 * `post-service`: enter service directory and run `yarn test`
+* `web`: enter service directory and run `yarn test`
 
-## Running the Application in development
+## Running the application in development
 
 * Run command `docker compose up --build`
 * After docker composr run successful, you can access [Funny Movie](http://localhost:8000/) to open website.
