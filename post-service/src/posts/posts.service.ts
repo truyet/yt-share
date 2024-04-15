@@ -65,12 +65,10 @@ export class PostsService {
         .findMany({
           where: { videoId: { in: postIds }, userId },
         })
-        .then((ints) => {
-          return new Map(ints.map((it) => [it.videoId, it.type]));
-        });
+      const uints = new Map(interactions.map((it) => [it.videoId, it.type]));
       // Logger.log(Array.from(interactions.keys()));
       postEnts.forEach((it) => {
-        it.userInteraction = interactions.get(it.id);
+        it.userInteraction = uints.get(it.id);
       });
     }
     return postEnts;

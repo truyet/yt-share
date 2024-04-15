@@ -2,4 +2,4 @@
 
 import { io } from "socket.io-client";
 
-export const socket = io("ws://localhost:8001");
+export const socket = io(process.env.NEXT_PUBLIC_WEBSOCKET || "ws://localhost:8001");

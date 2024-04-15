@@ -18,6 +18,10 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM base AS builder
+
+ARG NEXT_PUBLIC_WEBSOCKET
+ENV NEXT_PUBLIC_WEBSOCKET $WEBSOCKET
+
 WORKDIR /usr/src/app
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .

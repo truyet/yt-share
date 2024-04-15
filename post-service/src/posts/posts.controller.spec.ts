@@ -102,6 +102,11 @@ describe('PostsController', () => {
         return data;
       }); //.mockReturnValueOnce();
 
+    prisma.postInteraction.findMany = jest
+    .fn()
+    .mockImplementationOnce(({ where }) => {
+      return []
+    })
     const postsResp = await controller.findLatest({ user: { sub: 1 } }, '5');
     expect(postsResp[0].id).toEqual(4);
   });

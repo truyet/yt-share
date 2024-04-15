@@ -20,6 +20,7 @@ export class AuthService {
 
   async signIn(email: string, pass: string): Promise<TokenDto> {
     const user = await this.usersService.getUser(email);
+    console.log('signIn', user)
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -44,6 +45,11 @@ export class AuthService {
   }
 
   async register(registerDto: RegisterUserDto): Promise<TokenDto> {
+    const user = await this.usersService.getUser(registerDto.email)
+    console.log('register', user)
+    if (user) {
+      throw new BadRequestException("EMAIL_EXISTED")
+    }
     const salt = uid(16);
     const hash = await argon2.hash(registerDto.password + salt);
     try {

@@ -27,7 +27,7 @@ RUN apk add openssl3
 USER node
 WORKDIR /usr/src/app
 
-COPY prisma ./prisma/
+COPY --from=builder --chown=node:node /usr/src/app/prisma/ ./prisma/
 COPY --from=builder --chown=node:node /usr/src/app/package.json ./
 COPY --from=builder --chown=node:node /usr/src/app/package*.json ./
 COPY --from=builder --chown=node:node /usr/src/app/node_modules/ ./node_modules/
