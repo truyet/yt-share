@@ -46,11 +46,6 @@ Project use sqlite with prisma for development, you need to migrate database wit
 * Run command `docker compose up --build`
 * After docker composr run successful, you can access [Funny Movie](http://localhost:8000/) to open website.
 
-
-### Demo
-
-Demo link [Funny Movie](http://68.183.229.85:8000/)
-
 Video
 
 https://github.com/truyet/yt-share/assets/710057/181e1fa5-ab4a-4df2-884a-b15547689530
